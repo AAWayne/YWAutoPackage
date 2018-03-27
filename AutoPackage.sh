@@ -43,7 +43,7 @@ else
 echo "============ 本次$2用时：$1秒 ======="
 fi
 }
-echo "============ "${d_filename}" 打包开始 ======="
+echo "============ ${d_filename} 打包开始 ======="
 
 # 如果没有使用cocoapods 反之if会处理
 pro_clean=project
@@ -67,7 +67,7 @@ xcodebuild -exportArchive -archivePath ./${ipa_dir}/${pro_name}.xcarchive -expor
 # 切换到ipa目录去删除${pro_name}.xcarchive包
 cd ./${ipa_dir}
 rm -r ${pro_name}.xcarchive
-echo "============ "${d_filename}" 打包完成 ======="
+echo "============ ${d_filename} 打包完成 ======="
 # 打包结束时间
 end_time=$(date +%s)
 # 计算打包时间(秒：s)
@@ -75,21 +75,21 @@ cost_time=$[$end_time - $begin_time]
 #调用时间转换函数
 timeTransformation $cost_time "打包"
 
-# 自动上传蒲公英(这里的 uKey、_api_key)获取地址为 https://www.pgyer.com/doc/api#uploadApp
-################## 配置上传参数 _api_key、uKey Start ########
-pgy_api_key="650b285e9ba 这里自己去查你的_api_key c94d58ac53a"
-pgy_ukey="1afad5df91 这里自己去查你的_ukey f7305e29"
-################## 配置蒲公英上传参数 End ####################
-# 开始上传
-echo "============ 正在上传 "${d_filename}" 到蒲公英 ======="
-ipa_file_path="./${pro_name}.ipa"
-curl -F "file=@${ipa_file_path}" -F "uKey=${pgy_ukey}" -F "_api_key=${pgy_api_key}" https://qiniu-storage.pgyer.com/apiv1/app/upload
-echo "============ 上传结束 ======="
-
-# 上传结束时间
-upload_end_time=$(date +%s)
-# 计算上传时间(秒：s)
-upload_time=$[$upload_end_time - $end_time]
-#调用时间转换函数
-timeTransformation $upload_time "上传蒲公英"
+## 自动上传蒲公英(这里的 uKey、_api_key)获取地址为 https://www.pgyer.com/doc/api#uploadApp
+################### 配置上传参数 _api_key、uKey Start ########
+#pgy_api_key="650b285e9ba 这里自己去查你的_api_key c94d58ac53a"
+#pgy_ukey="1afad5df91 这里自己去查你的_ukey f7305e29"
+################### 配置蒲公英上传参数 End ####################
+## 开始上传
+#echo "============ 正在上传 ${d_filename} 到蒲公英 ======="
+#ipa_file_path="./${pro_name}.ipa"
+#curl -F "file=@${ipa_file_path}" -F "uKey=${pgy_ukey}" -F "_api_key=${pgy_api_key}" https://qiniu-storage.pgyer.com/apiv1/app/upload
+#echo "============ 上传结束 ======="
+#
+## 上传结束时间
+#upload_end_time=$(date +%s)
+## 计算上传时间(秒：s)
+#upload_time=$[$upload_end_time - $end_time]
+##调用时间转换函数
+#timeTransformation $upload_time "上传蒲公英"
 
