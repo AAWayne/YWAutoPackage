@@ -8,6 +8,16 @@
 
 4、执行后按需求选择打包版本（企业版、正式版、测试版、开发版）
 
+5、如果执行脚本时出现如下错误是因为文件权限不足，只需对其授权777即可
+```
+-bash: /Users/candy/Desktop/AutoPackage.sh: Permission denied
+```
+执行如下授权命令即可（这里的`/Users/candy/Desktop/AutoPackage.sh`路径参考上面的）
+```
+chmod -R 777 /Users/candy/Desktop/AutoPackage.sh
+```
+
+
 ### 打包脚本核心内容展示
 
 ```
