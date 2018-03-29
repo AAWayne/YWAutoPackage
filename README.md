@@ -1,6 +1,4 @@
-# AutoPackage
-iOS项目自动打包脚本
-
+# AutoPackage - iOS项目自动打包脚本
 ### 使用方法：
 1、将`AutoPackage.sh` 脚本和`autoplist文件夹`拖入`项目根目录`后
 
@@ -10,8 +8,8 @@ iOS项目自动打包脚本
 
 4、执行后按需求选择打包版本（企业版、正式版、测试版、开发版）
 
-
 ### 打包脚本核心内容展示
+
 ```
 # 开始打包操作
 # 开始时间（用于计算打包脚本执行时间）
@@ -122,10 +120,10 @@ timeTransformation $upload_time "上传App Store"
 # 如果不上传蒲公英或不上传App Store的话 注释下面两句话即可（如果没填写相关账号则不会执行上传操作）
 uploadPGY
 uploadAppStore
-
 ```
-
-![](http://upload-images.jianshu.io/upload_images/2822163-089602958ae7072a.png)
+<div align="center">
+<img src = "http://upload-images.jianshu.io/upload_images/2822163-23eb59c7072548bb.png" width = "300" height = "100" alt="图片名称" align = center />
+</div>
 
 
 
