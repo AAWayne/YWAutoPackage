@@ -2,24 +2,22 @@
 # iOS AutoPackage Shell Script
 # Author:  阿唯不知道 <90candy.com @ gmail.com>
 # 脚本使用方法：直接把脚本拖入终端 然后回车键即可执行
-# 注意1：将plist文件夹、打包脚本放到项目的根目录
-# 注意2：不要在等号两边加空格
-# 注意3：请先正确配置需要打包的项目后再来（如果连手动打包都失败的话自动打包肯定也不会成功）
-
+# ⚠️注意1：将plist文件夹、打包脚本放到项目的根目录
+# ⚠️注意2：不要在等号两边加空格
+# ⚠️注意3：请先正确配置需要打包的项目后再来（如果连手动打包都失败的话自动打包肯定也不会成功）
 ############################ 参数配置 ###################################
 
 # 项目全称（一般为BaseProject.xcworkspace 或者 BaseProject.xcodeproj）
-# 注意，使用cocoapods的一般都填写 xxx.xcworkspace 这种格式
+# ⚠️⚠️注意，使用cocoapods的一般都填写 xxx.xcworkspace 这种格式
 pro_full_name="BaseProject.xcworkspace"
 
-# 自动上传蒲公英(uKey、_api_key)获取地址https://www.pgyer.com/doc/api#uploadApp
-api_key="" # 不上传可不填
-ukey="" # 不上传可不填
+# ⚠️⚠️自动上传蒲公英(uKey、_api_key)获取地址https://www.pgyer.com/doc/api#uploadApp
+api_key="" # 不上传则不填
+ukey="" # 不上传则不填
 
-# 自动上传苹果商店(不上传可不填)
-# 苹果开发者账号
-apple_id=""
-apple_pwd=""
+# ⚠️⚠️自动上传苹果商店 - 苹果开发者账号与密码
+apple_id="" # 不上传则不填
+apple_pwd="" # 不上传则不填
 ############################ 参数配置 ###################################
 
 
@@ -28,12 +26,12 @@ printf "
 #######################################################################
 #                              阿唯不知道
 #                       不要因为骄傲而不屑于抄袭
-#         更多内容请访问 https://www.jianshu.com/u/0f7d26d766f4
+#        更多内容请访问 ⭐️https://www.jianshu.com/u/0f7d26d766f4
 #######################################################################
 "
 # 判断配置是否为空
 if [ -z "$pro_full_name" ]; then
-echo "${CWARNING}项目全称不能为空 ${CEND}"
+echo "${CWARNING}😭项目全称不能为空 ${CEND}"
 exit
 fi
 
@@ -46,7 +44,7 @@ pro_name=${myarray[0]}
 pro_suffix=${myarray[1]}
 # 判断项目全称是否配置正确
 if [ "$pro_suffix" != "xcworkspace" ] && [ "$pro_suffix" != "xcodeproj" ]; then
-echo "${CWARNING}项目名称配置错误，请正确配置project_full_name，如：Project.xcworkspace 或 BaseProject.xcodeproj类型${CEND}"
+echo "${CWARNING}😭项目名称配置错误，请正确配置project_full_name，如：Project.xcworkspace 或 BaseProject.xcodeproj类型${CEND}"
 exit
 fi
 
@@ -62,11 +60,11 @@ while :; do
 \t${CMSG}4${CEND}. Developers(开发版)
 \t${CMSG}q${CEND}. 退出打包脚本
 "
-  read -p "请输入打包类型: " Number
-  if [[ ! $Number =~ ^[1-4,q]$ ]]; then
-    echo "${CFAILURE}输入错误! 只允许输入 1 ~ 4 和 q${CEND}"
+  read -p "请输入打包类型: " number
+  if [[ ! $number =~ ^[1-4,q]$ ]]; then
+    echo "${CFAILURE}😭输入错误! 只允许输入 1 ~ 4 和 q${CEND}"
   else
-    case "$Number" in
+    case "$number" in
     1)
       pro_plist=EnterpriseExportOptions
       break
@@ -90,6 +88,16 @@ while :; do
   fi
 done
 
+# 根据需求判断上一步是否执行成功，传入执行结果：$? "执行步骤名"
+judgementLastIsSuccsess() {
+    if [ $1 -eq 0 ]; then
+    echo -e "\n⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️ $2 操 作 成 功 ! ⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️\n"
+    else
+    echo -e "\n😭😭😭😭😭😭😭😭 $2操作失败，终止脚本 ! 😭😭😭😭😭😭😭😭\n"
+    exit
+    fi
+}
+
 # 开始打包操作
 # 开始时间（用于计算打包脚本执行时间）
 begin_time=$(date +%s)
@@ -105,7 +113,7 @@ d_filename=${PWD##*/} # 打印当前所在目录(basename `pwd`) 或 echo ${d_fi
 timeTransformation()
 {
     if [ $1 -le 0 ]; then
-    echo "============ 请检查项目是否能正常手动打包并导出ipa文件 ======="
+    echo "============ 😭请检查项目是否能正常手动打包并导出ipa文件 ======="
     exit
     fi
     if [ $1 -gt 59 ]; then
@@ -127,6 +135,7 @@ fi
 
 # Clean操作
 xcodebuild clean -${pro_clean} ${pro_name}.${pro_suffix} -scheme ${pro_name} -configuration ${pro_environ}
+judgementLastIsSuccsess $? "Clean"
 # 创建存放 archive和IPA 的文件夹
 cd ../
 ipa_dir=${d_filename}_${date_string}
@@ -134,9 +143,11 @@ mkdir ${ipa_dir}
 cd ./${d_filename}
 # Archive
 xcodebuild archive -${pro_clean} ${pro_name}.${pro_suffix} -scheme ${pro_name} -archivePath ../${ipa_dir}/${pro_name}.xcarchive
+judgementLastIsSuccsess $? "Archive"
 cd ../
 # 导出IPA包
 xcodebuild -exportArchive -archivePath ./${ipa_dir}/${pro_name}.xcarchive -exportOptionsPlist ./${d_filename}/autoplist/${pro_plist}.plist -exportPath ./${ipa_dir}
+judgementLastIsSuccsess $? "导出IPA包"
 # 切换到ipa目录去删除${pro_name}.xcarchive包
 cd ./${ipa_dir}
 rm -r ${pro_name}.xcarchive
@@ -162,7 +173,8 @@ uploadPGY()
     upload_start_time=$(date +%s)
     # 开始上传
     echo "============ 正在上传 ${d_filename} 到 蒲公英 ======="
-    curl -F "file=@${ipa_path}" -F "uKey=${ukey}" -F "_api_key=${api_key}" https://qiniu-storage.pgyer.com/apiv1/app/upload
+    curl -F "file=@${ipa_path}" -F "uKey=${ukey}" -F "_api_key=${api_key}" -F "installType=2" -F "password=xznx1506" https://qiniu-storage.pgyer.com/apiv1/app/upload
+    judgementLastIsSuccsess $? "上传蒲公英"
     echo "============ 上传结束 ======="
     # 上传结束时间
     upload_end_time=$(date +%s)
@@ -186,9 +198,11 @@ uploadAppStore()
     # validate（验证）
     echo "============ ${d_filename} 正在验证IPA包 ======="
     "$altoolPath" --validate-app -f "$ipa_path" -u "$apple_id" -p "$apple_pwd" -t ios --output-format xml
+    judgementLastIsSuccsess $? "验证IPA包"
     # 上传
     echo "============ ${d_filename} 验证结束，正在上传中 ======="
     "$altoolPath" --upload-app -f "$ipa_path" -u "$apple_id" -p "$apple_pwd" -t ios --output-format xml
+    judgementLastIsSuccsess $? "上传App Store"
     echo "============ ${d_filename} AppStore - 上传结束 ======="
     # 上传结束时间
     upload_end_time=$(date +%s)
