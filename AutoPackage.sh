@@ -104,7 +104,7 @@ d_filename=${PWD##*/} # 打印当前所在目录(basename `pwd`) 或 echo ${d_fi
 # 时间转换函数（秒转分钟）
 timeTransformation()
 {
-    if [ $1 -le 0]; then
+    if [ $1 -le 0 ]; then
     echo "============ 请检查项目是否能正常手动打包并导出ipa文件 ======="
     exit
     fi
