@@ -4,7 +4,7 @@
 # 脚本使用方法：直接把脚本拖入终端 然后回车键即可执行
 # 注意1：将plist文件夹、打包脚本放到项目的根目录
 # 注意2：不要在等号两边加空格
-# 注意3：请先正确配置需要打包的项目后再来（如果连手动打包都失败的自然自动打包也不会成功）
+# 注意3：请先正确配置需要打包的项目后再来（如果连手动打包都失败的话自动打包肯定也不会成功）
 
 ############################ 参数配置 ###################################
 
@@ -104,8 +104,11 @@ d_filename=${PWD##*/} # 打印当前所在目录(basename `pwd`) 或 echo ${d_fi
 # 时间转换函数（秒转分钟）
 timeTransformation()
 {
-    if [ $1 -gt 59 ]
-    then
+    if [ $1 -le 0]; then
+    echo "============ 请检查项目是否能正常手动打包并导出ipa文件 ======="
+    exit
+    fi
+    if [ $1 -gt 59 ]; then
     t_min=$[$1 / 60]
     t_second=$[$1 % 60]
     echo "============ 本次$2用时：${t_min}分${t_second}秒 ======="
@@ -118,8 +121,7 @@ echo "============ ${d_filename} 打包开始 ======="
 pro_environ=Release
 # 如果没有使用cocoapods 反之if会处理
 pro_clean=project
-if [ $pro_suffix == xcworkspace ]
-then
+if [ $pro_suffix == xcworkspace ]; then
 pro_clean=workspace
 fi
 
@@ -187,7 +189,7 @@ uploadAppStore()
     # 上传
     echo "============ ${d_filename} 验证结束，正在上传中 ======="
     "$altoolPath" --upload-app -f "$ipa_path" -u "$apple_id" -p "$apple_pwd" -t ios --output-format xml
-    echo "============ ${d_filename} AppStore - 上传完成 ======="
+    echo "============ ${d_filename} AppStore - 上传结束 ======="
     # 上传结束时间
     upload_end_time=$(date +%s)
     # 计算上传时间(秒：s)
