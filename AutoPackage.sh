@@ -173,7 +173,7 @@ uploadPGY()
     upload_start_time=$(date +%s)
     # 开始上传
     echo "============ 正在上传 ${d_filename} 到 蒲公英 ======="
-    curl -F "file=@${ipa_path}" -F "uKey=${ukey}" -F "_api_key=${api_key}" -F "installType=2" -F "password=xznx1506" https://qiniu-storage.pgyer.com/apiv1/app/upload
+    curl -F "file=@${ipa_path}" -F "uKey=${ukey}" -F "_api_key=${api_key}"  https://qiniu-storage.pgyer.com/apiv1/app/upload
     judgementLastIsSuccsess $? "上传蒲公英"
     echo "============ 上传结束 ======="
     # 上传结束时间

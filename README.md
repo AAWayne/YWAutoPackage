@@ -34,7 +34,7 @@ xcodebuild -exportArchive -archivePath ./${ipa_dir}/${pro_name}.xcarchive -expor
 judgementLastIsSuccsess $? "导出IPA包"
 
 # 上传到蒲公英
-curl -F "file=@${ipa_path}" -F "uKey=${ukey}" -F "_api_key=${api_key}" -F "installType=2" -F "password=xznx1506" https://qiniu-storage.pgyer.com/apiv1/app/upload
+curl -F "file=@${ipa_path}" -F "uKey=${ukey}" -F "_api_key=${api_key}" https://qiniu-storage.pgyer.com/apiv1/app/upload
 
 
 # ============ 上传到App Store ============  
