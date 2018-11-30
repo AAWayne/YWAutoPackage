@@ -58,9 +58,11 @@ altoolPath="/Applications/Xcode.app/Contents/Applications/Application Loader.app
 uploadPGY
 uploadAppStore
 ```
+
+<div align="center">
+<img src = "https://upload-images.jianshu.io/upload_images/2822163-1b59ac9d4417b718.png" align = center />
+</div>
+
 <div align="center">
 <img src = "http://upload-images.jianshu.io/upload_images/2822163-23eb59c7072548bb.png" width = "300" height = "100" alt="图片名称" align = center />
 </div>
-
-
-
