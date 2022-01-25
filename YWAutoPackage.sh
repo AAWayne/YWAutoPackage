@@ -60,12 +60,11 @@ plist_name=""
 while :; do
   printf "
 选择你的打包版本类型：
-\x00${CMSG}1${CEND}.Developers(开发版)
-\x00${CMSG}2${CEND}.App Store(正式版)
-\x00${CMSG}3${CEND}.AdHoc(测试版)
-\x00${CMSG}4${CEND}.Enterprise(企业版)
-\x00${CMSG}q${CEND}.退出打包脚本
-\n
+   ${CMSG}1${CEND}.Developers(开发版)
+   ${CMSG}2${CEND}.App Store(正式版)
+   ${CMSG}3${CEND}.AdHoc(测试版)
+   ${CMSG}4${CEND}.Enterprise(企业版)
+   ${CMSG}q${CEND}.退出打包脚本\n
 "
   read -p "请输入打包类型: " number
   if [[ ! ${number} =~ ^[1-4,q]$ ]]; then
