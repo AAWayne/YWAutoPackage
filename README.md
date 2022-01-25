@@ -1,43 +1,47 @@
-# AutoPackage - iOS项目自动打包脚本
+# YWAutoPackage - iOS项目自动打包脚本
 
 ⚠️注意：你的项目第一次必须手动打包成功后再能正常使用脚本，因为Xcode手动打包会把打包所需资料准备齐全
 
 ### 使用方法：
-1、将`AutoPackage.sh` 脚本和`autoplist文件夹`拖入`项目根目录`后
+1、将`YWAutoPackage文件夹`直接拖到`桌面`后
 
-2、配置打开编辑`AutoPackage.sh`中的配置参数（若只打包，则只需配置`pro_full_name`即可）
+2、配置打开编辑`YWAutoPackage.sh`中的配置相关参数
 
-3、再将`AutoPackage.sh`脚本文件拖入`终端`回车即可执行自动打包脚本
+3、再将`YWAutoPackage.sh`脚本文件拖入`终端`回车即可执行自动打包脚本
 
-4、执行后按需求选择打包版本（企业版、正式版、测试版、开发版）
+4、执行后按需求选择打包版本（开发版、测试版、正式版、企业版）
 
 5、如果执行脚本时出现如下错误是因为文件权限不足，只需对其授权777即可
 ```
--bash: /Users/candy/Desktop/AutoPackage.sh: Permission denied
+-bash: /Users/candy/Desktop/YWAutoPackage.sh: Permission denied
 ```
-执行如下授权命令即可（这里的`/Users/candy/Desktop/AutoPackage.sh`路径参考上面的）
+执行如下授权命令即可（这里的路径可复制拖入终端时的路径）
 ```
-chmod -R 777 /Users/candy/Desktop/AutoPackage.sh
+chmod -R 777 YWAutoPackage.sh 文件绝对路径
 ```
 
 
 ### 打包脚本核心内容展示
 
 ```
+# 先组装路径 archive_path、ipa_path ，用于导出 ipa 和 上传
+archive_path="${temp_path}/${ipa_dir}/${pro_name}.xcarchive"
+ipa_path="${temp_path}/${ipa_dir}/${pro_name}.ipa"
+
 # Clean操作
-xcodebuild clean -${pro_clean} ${pro_name}.${pro_suffix} -scheme ${pro_name} -configuration ${pro_environ}
+xcodebuild clean -${pro_clean} ${pro_full_name} -scheme ${pro_name} -configuration ${pro_environ}
 judgementLastIsSuccsess $? "Clean"
 
-# Archive
-xcodebuild archive -${pro_clean} ${pro_name}.${pro_suffix} -scheme ${pro_name} -archivePath ../${ipa_dir}/${pro_name}.xcarchive
+# Archive操作
+xcodebuild archive -${pro_clean} ${pro_full_name} -scheme ${pro_name} -archivePath ${archive_path}
 judgementLastIsSuccsess $? "Archive"
 
-# 导出IPA包
-xcodebuild -exportArchive -archivePath ./${ipa_dir}/${pro_name}.xcarchive -exportOptionsPlist ./${d_filename}/autoplist/${pro_plist}.plist -exportPath ./${ipa_dir}
-judgementLastIsSuccsess $? "导出IPA包"
+# 导出IPA文件操作
+xcodebuild -exportArchive -archivePath ${archive_path} -exportOptionsPlist ${plist_path} -exportPath ${temp_path}/${ipa_dir}
+judgementLastIsSuccsess $? "导出IPA文件"
 
-# 上传到蒲公英
-curl -F "file=@${ipa_path}" -F "uKey=${ukey}" -F "_api_key=${api_key}" https://qiniu-storage.pgyer.com/apiv1/app/upload
+# 删除 xcarchive 包
+rm -r ${archive_path}
 
 
 # ============ 上传到App Store ============  
