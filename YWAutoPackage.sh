@@ -2,23 +2,21 @@
 # iOS AutoPackage Shell Script
 # Author:  阿唯不知道 <90candy.com @ gmail.com>
 # ⚠️⚠️使用方法：将脚本文件夹放置在桌面，参数配置好之后直接把脚本拖入终端 然后回车键即可执行
-# ⚠️⚠️注意1：由于此脚本不涉及证书及描述文件相关配置，所以需手动打包成功后才能使用此脚本
+# ⚠️⚠️注意事项：由于此脚本不涉及证书及描述文件相关配置，所以需Xcode手动打包并导出成功后才能使用此脚本
 ############################ 参数配置 ###################################
 
-# 项目路径(文件夹绝对路径)
-pro_path="/Users/xxx/BaseProject"
-# 项目全称（一般为BaseProject.xcworkspace 或者 BaseProject.xcodeproj）
-pro_full_name="BaseProject.xcworkspace"
-# 默认 Release 版，也可配置为 Debug
+# ⚠️默认 Release 版，也可配置为 Debug
 pro_environ=Release
+# 项目路径(文件绝对路径，如"/Users/xxx/BaseProject/BaseProject.xcworkspace")
+pro_path="/Users/xxx/BaseProject/BaseProject.xcworkspace"
 
-# ⚠️⚠️自动上传蒲公英(uKey、_api_key)获取地址https://www.pgyer.com/doc/api#uploadApp
+# ⚠️自动上传蒲公英(uKey、_api_key)获取地址https://www.pgyer.com/doc/api#uploadApp
 api_key="" # 不上传则不填
 ukey=""  # 不上传则不填
 pgy_installType=1   # 1、公开发布 2、密码安装
 pgy_password=""     # 如果设置了密码安装则需要密码
 
-## ⚠️⚠️自动上传苹果商店 - 苹果开发者账号与密码
+## ⚠️自动上传苹果商店 - 苹果开发者账号与密码
 apple_id="" # 不上传则不填
 apple_pwd="" # 不上传则不填
 ############################ 参数配置 ###################################
@@ -33,20 +31,14 @@ printf "
 #######################################################################
 "
 
-# 判断配置是否为空
-if [ -z "${pro_full_name}" ]; then
-echo "${CWARNING}⚠️项目全称不能为空 ${CEND}"
-exit
-fi
-
-# 分割取得 项目名称 & 项目后缀
-myarray=(${pro_full_name//./ })
-for var in ${array[@]}
-do
-echo $var
-done
-pro_name=${myarray[0]}
-pro_suffix=${myarray[1]}
+# 截取项目全称 （如：BaseProject.xcworkspace --> 项目名称、项目后缀）
+pro_full_name=${pro_path##*/}
+# 分割得 项目名称、项目后缀
+pro_array=(${pro_full_name//./ })
+pro_name=${pro_array[0]}
+pro_suffix=${pro_array[1]}
+# 项目文件夹路径
+pro_path=${pro_path%/*}
 
 # 判断项目全称是否配置正确
 if [ "${pro_suffix}" != "xcworkspace" ] && [ "${pro_suffix}" != "xcodeproj" ]; then
