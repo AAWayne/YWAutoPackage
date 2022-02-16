@@ -2,7 +2,7 @@
 
 >⚠️注意：
 >
-> 你的项目第一次必须手动打包成功后再能正常使用脚本，因为Xcode手动打包会把打包所需资料准备齐全
+> 你的项目第一次必须手动打包成功后再能正常使用脚本，Xcode 手动打包成功会把打包所需文件备齐
 
 ### 使用方法：
 
@@ -23,7 +23,7 @@
 chmod -R 777 YWAutoPackage.sh 文件绝对路径
 ```
 
-6、如果需要上传 App Store，则安装 Transporter 上传工具，并且使用专用密码
+6、如果需要上传 App Store，则安装 Transporter 上传工具，并且配置开发者账号和专用密码
 
 
 ### 打包脚本核心内容展示
@@ -50,14 +50,9 @@ rm -r ${archive_path}
 
 
 # ============ 上传到App Store ============  
-# 获取 altoolPath 上传工具
-altoolPath="/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/Frameworks/ITunesSoftwareService.framework/Versions/A/Support/altool"
-
-# validate（验证）
-"$altoolPath" --validate-app -f "$ipa_path" -u "$apple_id" -p "$apple_pwd" -t ios --output-format xml
-
-# upload（上传）
-"$altoolPath" --upload-app -f "$ipa_path" -u "$apple_id" -p "$apple_pwd" -t ios --output-format xml
+# 获取 Transporter 上传工具【推荐】
+toolPath="/Applications/Transporter.app/Contents/itms/bin/iTMSTransporter"
+${toolPath} -m upload -assetFile ${ipa_path} -u ${apple_id} -p ${apple_pwd} -v informational
 # ============ 上传到App Store ============ 
  
 ```
