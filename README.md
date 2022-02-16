@@ -23,6 +23,8 @@
 chmod -R 777 YWAutoPackage.sh 文件绝对路径
 ```
 
+6、如果需要上传 App Store，则安装 Transporter 上传工具，并且使用专用密码
+
 
 ### 打包脚本核心内容展示
 

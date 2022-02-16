@@ -190,7 +190,7 @@ uploadPGY()
     upload_start_time=$(date +%s)
     # 开始上传
     echo "============ 正在上传 ${pro_name} 到 蒲公英 ======="
-curl -F "file=@${ipa_path}" -F "uKey=${ukey}" -F "_api_key=${api_key}" -F "installType=${pgy_installType}" -F "password=${pgy_password}" https://qiniu-storage.pgyer.com/apiv1/app/upload
+    curl -F "file=@${ipa_path}" -F "uKey=${ukey}" -F "_api_key=${api_key}" -F "installType=${pgy_installType}" -F "password=${pgy_password}" https://qiniu-storage.pgyer.com/apiv1/app/upload
     judgementLastIsSuccsess $? "上传蒲公英"
     echo "============ 上传结束 ======="
     # 上传结束时间
@@ -211,16 +211,11 @@ uploadAppStore()
     fi
     # 上传开始时间
     upload_start_time=$(date +%s)
-    # 开始上传
-    echo "============ 准备上传到 AppStore ======="
-    altoolPath="/Applications/Xcode.app/Contents/Applications/Application Loader.app/Contents/Frameworks/ITunesSoftwareService.framework/Versions/A/Support/altool"
-    # validate（验证）
-    echo "============ 正在验证IPA包 ======="
-    "${altoolPath}" --validate-app -f "${ipa_path}" -u "${apple_id}" -p "${apple_pwd}" -t ios --output-format xml
-    judgementLastIsSuccsess $? "验证IPA包"
-    # 上传
-    echo "============ 验证结束，正在上传中 ======="
-    "${altoolPath}" --upload-app -f "${ipa_path}" -u "${apple_id}" -p "${apple_pwd}" -t ios --output-format xml
+    echo "============ AppStore 上传开始 ======="
+    # 如果是命令安装的 Transporter，则路径为：/Applications/Xcode.app/Contents/SharedFrameworks/ContentDeliveryServices.framework/itms/bin/iTMSTransporter
+    # 开始上传 - 这里用的是从 App Store 下载的 Transporter 上传工具【推荐】
+    toolPath="/Applications/Transporter.app/Contents/itms/bin/iTMSTransporter"
+    ${toolPath} -m upload -assetFile ${ipa_path} -u ${apple_id} -p ${apple_pwd} -v informational
     judgementLastIsSuccsess $? "上传App Store"
     echo "============ AppStore 上传结束 ======="
     # 上传结束时间
