@@ -63,25 +63,25 @@ while :; do
     echo "${CFAILURE}⚠️输入错误! 只允许输入 1 ~ 4 和 q${CEND}"
   else
     case "$number" in
-    1)
-      plist_name="DevelopmentExportOptions.plist"
-      break
-      ;;
-    2)
-      plist_name="AppStoreExportOptions.plist"
-      break
-      ;;
-    3)
-      plist_name="AdHocExportOptions.plist"
-      break
-      ;;
-    4)
-      plist_name="EnterpriseExportOptions.plist"
-      break
-      ;;
-    q)
-      exit
-      ;;
+        1)
+          plist_name="DevelopmentExportOptions.plist"
+          break
+          ;;
+        2)
+          plist_name="AppStoreExportOptions.plist"
+          break
+          ;;
+        3)
+          plist_name="AdHocExportOptions.plist"
+          break
+          ;;
+        4)
+          plist_name="EnterpriseExportOptions.plist"
+          break
+          ;;
+        q)
+          exit
+          ;;
     esac
   fi
 done
