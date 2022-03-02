@@ -2,9 +2,11 @@
 
 >⚠️注意：
 >
-> 你的项目第一次必须手动打包成功后再能正常使用脚本，Xcode 手动打包成功会把打包所需文件备齐
+> 项目第一次必须手动打包成功才能正常使用该脚本，Xcode 手动打包后才会把打包所需文件备齐
 
-### 使用方法：
+##### Github地址：https://github.com/90candy/AutoPackage
+
+### 使用方法：[点击下载脚本相关文件](https://codeload.github.com/90candy/AutoPackage/zip/master)
 
 1、将`YWAutoPackage文件夹`直接拖到`桌面`后
 
@@ -12,15 +14,19 @@
 
 3、再将`YWAutoPackage.sh`脚本文件拖入`终端`回车即可执行自动打包脚本
 
-4、执行后按需求选择打包版本（开发版、测试版、正式版、企业版）
+4、执行脚本后按需求输入选择打包版本
+
+	Dev 开发版、Hoc 测试版、App Store 生产版、Enterprise 企业版
 
 5、如果执行脚本时出现如下错误是因为文件权限不足，只需对其授权777即可
+
 ```
--bash: /Users/candy/Desktop/YWAutoPackage.sh: Permission denied
+-bash: /Users/candy/Desktop/YWAutoPackage/YWAutoPackage.sh: Permission denied
 ```
-执行如下授权命令即可（这里的路径可复制拖入终端时的路径）
+执行如下授权命令即可（这里的参考了上面的路径地址）
+
 ```
-chmod -R 777 YWAutoPackage.sh 文件绝对路径
+chmod -R 777 /Users/candy/Desktop/YWAutoPackage/YWAutoPackage.sh
 ```
 
 6、如果需要上传 App Store，则安装 Transporter 上传工具，并且配置开发者账号和专用密码
@@ -59,7 +65,10 @@ ${toolPath} -m upload -assetFile ${ipa_path} -u ${apple_id} -p ${apple_pwd} -v i
 ### 如果不上传蒲公英或不上传App Store的话 注释下面两句话即可（如果没填写相关账号则不会执行上传操作）
 
 ```
+# 上传蒲公英分发平台
 uploadPGY
+
+# 上传 App Store
 uploadAppStore
 ```
 
