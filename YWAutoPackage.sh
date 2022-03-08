@@ -1,6 +1,6 @@
 #!/bin/bash
-# iOS AutoPackage Shell Script
-# Author:  阿唯不知道 <90candy.com @ gmail.com>
+# iOS YWAutoPackage Shell Script
+# Author:  阿唯不知道 <Wayne.YuanGM@gmail.com>
 # ⚠️⚠️使用方法：将脚本文件夹放置在桌面，参数配置好之后直接把脚本拖入终端 然后回车键即可执行
 # ⚠️⚠️注意事项：由于此脚本不涉及证书及描述文件相关配置，所以需Xcode手动打包并导出成功后才能使用此脚本
 ############################ 参数配置 ###################################

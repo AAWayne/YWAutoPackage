@@ -4,9 +4,9 @@
 >
 > 项目第一次必须手动打包成功才能正常使用该脚本，Xcode 手动打包后才会把打包所需文件备齐
 
-##### Github地址：https://github.com/90candy/AutoPackage
+##### Github地址：[https://github.com/AAWayne/YWAutoPackage](https://github.com/AAWayne/YWAutoPackage)
 
-### 使用方法：[点击下载脚本相关文件](https://codeload.github.com/90candy/AutoPackage/zip/master)
+### 使用方法：[点击下载脚本相关文件](https://codeload.github.com/AAWayne/YWAutoPackage/zip/master)
 
 1、将`YWAutoPackage文件夹`直接拖到`桌面`后
 
